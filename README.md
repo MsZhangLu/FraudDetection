@@ -6,14 +6,14 @@ Lu Zhang
 ## Goal: 
 The goal of this challenge is to build a machine learning model that predicts the probability that the first transaction of new user is fraudulent.
 
-## <a id='summary' style='color:black'>Outline: </a>
+## Outline: 
 1. Data Preprocessing
 2. Exploratory Data Analysis & Feature Engineering
 3. Model Training and Selection
 4. Hyperparameter Tuning
 5. Findings & Suggestion
 
-### [1. Data Preprocessing](#data_processing)
+### 1. Data Preprocessing
 
 For this analysis, I will use `pandas` for data manipulation, `matplotlib` for plotting, and `sklearn` for machine learning. 
 
@@ -25,7 +25,7 @@ For this analysis, I will use `pandas` for data manipulation, `matplotlib` for p
 
 **1.4 Data transformation**: Transform time-series variable
 
-### [2. Exploratory Data Analysis and Feature Engineering](#eda)
+### 2. Exploratory Data Analysis and Feature Engineering
 * I performed EDA with target, checked relationship between variables and response, and generated features as necessary.
 
 **2.1 Transaction Attributes:**
@@ -45,7 +45,7 @@ For this analysis, I will use `pandas` for data manipulation, `matplotlib` for p
 * Frausters may use same `device_id` or same `ip_address` for multiple transactions. More than half of users who signed up with same device more than once are fraudulent. So we could generate features `signup_anomaly` and `ip_anomaly` to monitor users' signup and purchase behavior.
 * We could also generate `{count}_signup_last_{time_window}_by_{device,ip}` to measure user transactions' frequency. 
 
-### [3. Model Building](#build)
+### 3. Model Building
 First, we'll split variables into features (X) and target (y), and split data into a training(70%) and test(30%) set. 
 
 **3.1 Metrics for Model Comparison**
@@ -87,7 +87,7 @@ Gradient Boosting Tree|0.8177|0.9333|0.6808|0.7873|0.8311
 
 Sampling does help to control precision, accuracy, and boost recall on imbalanced dataset.
 
-### [4. Hyperparameter Tuning](#tune)
+### 4. Hyperparameter Tuning
 I adopted `GridSearchCV` in scikit-learn for hyperparameter tuning. It runs through each combination of search parameters, and compares them based on scoring method `roc_auc_score`. Model with best performance:
 
 Model|Accuracy|Precision|Recall|F1-score|AUC
@@ -107,7 +107,7 @@ Save the **random forest classifier** with parameter below as **final model** to
             oob_score=False, random_state=None, verbose=0,
             warm_start=False)
             
-### [5. Findings & Suggestion](#findings)
+### 5. Findings & Suggestion
 **5.1 Findings - Fraud chracteristics**
 * Fraudsters signup on same device for multiple times.
 * Fraudsters take care about their ip address. (They may use VPN.) Signing up multiple times at same ip address may be just happened to normal users.
@@ -122,5 +122,5 @@ Save the **random forest classifier** with parameter below as **final model** to
 * Limit signup times on each device, in case frausters signup multiple times in a short time.
 * Increase chance of showing CAPTCHA for user validation, if the user comes to visit the website directly, or visits by Chrome. 
 
-### [6. Evaluation](#eval)
+### 6. Evaluation
 Evaluate the model by unseen data by feeding in test_data.csv. Run the following steps. We can get the predictions' accuracy at the end.
